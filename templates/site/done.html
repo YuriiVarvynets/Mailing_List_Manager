@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Done!</title>
+</head>
+<body>
+
+
+{% if data %}
+    <table>
+        {% for instance in data %}
+        <tr>
+            <td>{{ instance.id }}</td>
+            <td> some teXT</td>
+            <td>{{ instance.Property_Address }}</td>
+            <td>{{ instance.Property_City }}</td>
+            <td>{{ instance.Property_State }}</td>
+            <td>{{ instance.Property_Zip }}</td>
+        </tr>
+        {% endfor %}
+
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </table>
+{% endif %}
+
+</body>
+</html>

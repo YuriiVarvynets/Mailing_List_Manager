@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <!--
+    <form name="save" action="#" method="get">
+    <p><b>Property Address:</b><br>
+        <input name="pa" type="text" size="100" value="">
+    </p>
+    <p><b>Property City:</b><br>
+        <input name="pc" type="text" size="100" value="">
+    </p>
+    <p><b>Property State:</b><br>
+        <input name="ps" type="text" size="100" value="">
+    </p>
+    <p><b>PropertyZip:</b><br>
+        <input name="pz" type="text" size="100" value="33453">
+    </p>
+
+    <p><input type="submit" value="Save to DB" name="savetodb"></p>
+    </form>
+    -->
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file" />
+        <input type="submit" name="submit" value="Upload" />
+    </form>
+
+</body>
+</html>
