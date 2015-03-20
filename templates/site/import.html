@@ -30,10 +30,12 @@
 
 <div id='cssmenu'>
 <ul>
-   <li><a href='/Home'>Home</a></li>
+    <!--
+   <li><a href='/Home'>Home</a></li>-->
    <li class="active"><a href='/Import'>Import</a></li>
    <li><a href='/Search'>Search</a></li>
-   <li><a href='/About'>About</a></li>
+    <!--
+   <li><a href='/About'>About</a></li> -->
 </ul>
 </div>
 
@@ -41,10 +43,10 @@
 
 <form action='#' method='post'>{% csrf_token %}
     <div class="row">
-        <div id="left_div"><h1 style="font-family: 'Roboto', sans-serif; font-size: 32px; margin-top: 0; margin-bottom: 0">Last Mail Date: </h1></div>
+        <div id="left_div"><h1 style="font-family: 'Roboto', sans-serif; font-size: 32px; margin-top: 10px; margin-bottom: 0">Last Mail Date: </h1></div>
         <div class='col-sm-6'>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker1' style="width: 40%">
+                <div class='input-group date' id='datetimepicker1' style="width: 40%; margin-top: 10px; margin-bottom: 0">
                     <input id="last_mail_date" type='text' class="form-control" name="my_date"/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -60,7 +62,7 @@
         </script>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 10px; margin-bottom: 0px">
         {% csrf_token %}
         <input id="file-5" class="file" type="file" multiple=true data-preview-file-type="text">
     </div>

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Property(models.Model):
     id = models.CharField(max_length=82, primary_key=True)
     Owner_Label_Name = models.CharField(max_length=100, null=True)

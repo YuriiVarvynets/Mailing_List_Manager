@@ -28,10 +28,12 @@
 
 <div id='cssmenu'>
 <ul>
-   <li><a href='/Home'>Home</a></li>
+    <!--
+   <li><a href='/Home'>Home</a></li>-->
    <li><a href='/Import'>Import</a></li>
    <li class="active"><a href='/Search'>Search</a></li>
-   <li><a href='/About'>About</a></li>
+    <!--
+   <li><a href='/About'>About</a></li>-->
 </ul>
 </div>
 
@@ -125,31 +127,40 @@
         </div>
     </div>
 </form>
-{% if data %}
+{% if json_data %}
+
+    {{ json_data }}
+
     <table id="table"
-           data-toggle="table"
            data-toolbar="#toolbar"
            data-search="true"
            data-show-refresh="true"
            data-show-toggle="true"
            data-show-columns="true"
            data-show-export="true"
-           data-show-pagination-switch="true"
-           data-pagination="true"
-           data-side-pagination="server"
-           >
-
-        <tr>
-            <!--
-            <th data-field="state" data-checkbox="true"></th>-->
-            <th data-field="id" data-sortable="true">ID</th>
-            <th data-field="name" data-sortable="true" data-editable="true">Item Name</th>
-            <th data-field="price" data-sortable="true" data-editable="true">Item Price</th>
-            <th data-field="operate"
+>
+    <thead>
+    <tr>
+        <th data-field="state" data-checkbox="true"></th>
+        <th data-field="Owner_Label_Name" data-sortable="true">Owner Name</th>
+        <th data-field="Property_Address" data-sortable="true">Property Address</th>
+        <th data-field="Property_City" data-sortable="true">Property City</th>
+        <th data-field="Property_State" data-sortable="true" data-visible="false">Property State</th>
+        <th data-field="Property_Type" data-sortable="true">Prop. Type</th>
+        <th data-field="Mail_Address" data-sortable="true">Mail Address</th>
+        <th data-field="Mail_City" data-sortable="true">Mail City</th>
+        <th data-field="Mail_State" data-sortable="true" data-visible="false">Mail State</th>
+        <th data-field="Equity" data-sortable="true" data-visible="false">Equity</th>
+        <th data-field="Absentee_Owned" data-sortable="true" data-visible="false">Absentee Owned</th>
+        <th data-field="Last_Mail_Date" data-sortable="true">Last Mail Date</th>
+        <th data-field="operate"
                 data-formatter="operateFormatter"
                 data-events="operateEvents">Item Operate</th>
         </tr>
-    </table>
+    </tr>
+    </thead>
+</table>
+
 {% endif %}
 
 {% if form.errors %}
@@ -164,12 +175,67 @@
 </div>
 
 
+
+
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker({
              format: 'MM/DD/YYYY'
         });
     });
+</script>
+
+<script>
+
+    var data2 = [{'description': 'An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3) ', 'name': 'bootstrap-table', 'stargazers_count': '526', 'forks_count': '122'}];
+    var data = JSON.parse('{{ json_data|safe }}');
+
+    $(function () {
+        $('#table').bootstrapTable({
+            data: data
+        });
+    });
+
+    var $table = $('#table'),
+        $remove = $('#remove');
+    $(function () {
+        $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+        });
+        $remove.click(function () {
+            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                return row.id
+            });
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+            $remove.prop('disabled', true);
+        });
+    });
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="like" href="javascript:void(0)" title="Like">',
+            '<i class="glyphicon glyphicon-heart"></i>',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0)" title="Remove">',
+            '<i class="glyphicon glyphicon-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            alert('You click like action, row: ' + JSON.stringify(row));
+        },
+        'click .remove': function (e, value, row, index) {
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            });
+        }
+    };
+
+
 </script>
 
 
