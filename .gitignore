@@ -1,1 +1,2 @@
-.idea/dataSources.ids
+.idea/
+./*.pyc
