@@ -3,3 +3,5 @@
 Mail_Manager_Site/migrations/
 Mailing_List_Manager/__pycache__/
 Mail_Manager_Site/__pycache__/
+Mail_Manager_Site/__init__.py
+Mailing_List_Manager/__init__.py

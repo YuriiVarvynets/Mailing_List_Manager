@@ -33,3 +33,4 @@ class Query(models.Model):
     Absentee_Owned = models.CharField(max_length=5, null=True, blank=True)
     Last_Mail_Date = models.DateField(null=True, blank=True, default=None)
     Query_Limit = models.CharField(max_length=5, null=True, blank=True, default=None)
+    Query_Name = models.CharField(max_length=100, null=False, blank=False, default='Default query name')
