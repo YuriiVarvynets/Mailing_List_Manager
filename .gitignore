@@ -1,2 +1,5 @@
 .idea/
 ./*.pyc
+Mailing_List_Manager/migrations/
+Mailing_List_Manager/__pycache__/
+Mail_Manager_Site/__pycache__/
