@@ -22,7 +22,7 @@
     $.extend($.fn.bootstrapTable.defaults, {
         showExport: false,
         // 'json', 'xml', 'png', 'csv', 'txt', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'
-        exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel']
+        exportTypes: ['csv', 'excel']
     });
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
@@ -63,11 +63,20 @@
                 }
                 $.each(exportTypes, function (i, type) {
                     if (TYPE_NAME.hasOwnProperty(type)) {
-                        $menu.append(['<li data-type="' + type + '">',
-                                '<a href="javascript:void(0)">',
-                                    TYPE_NAME[type],
+                        if (type == 'excel'){
+                            $menu.append(['<li data-type="' + type + '">',
+                                '<a id="dlink_excel" href="javascript:void(0)">',
+                                TYPE_NAME[type],
                                 '</a>',
-                            '</li>'].join(''));
+                                '</li>'].join(''))
+                        }
+                        else {
+                            $menu.append(['<li data-type="' + type + '">',
+                                '<a id="dlink" href="javascript:void(0)">',
+                                TYPE_NAME[type],
+                                '</a>',
+                                '</li>'].join(''));
+                        }
                     }
                 });
 

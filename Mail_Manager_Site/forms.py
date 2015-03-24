@@ -1,8 +1,10 @@
 from django import forms
- 
+
+
 class PostForm(forms.Form):
-    content = forms.CharField(max_length=256,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    content = forms.CharField(max_length=256, widget=forms.TextInput(attrs={'class': 'form-control'}))
     created_at = forms.DateTimeField()
+
 
 class SearchForm(forms.Form):
     Owner_Label_Name = forms.CharField(required=False, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -18,3 +20,9 @@ class SearchForm(forms.Form):
     Equity = forms.CharField(required=False, max_length=3, widget=forms.TextInput(attrs={'class': 'form-control'}))
     Absentee_Owned = forms.CharField(required=False, max_length=5, widget=forms.Select(attrs={'class': 'form-control'},choices=(('empty', ''),('yes', 'Yes'),('no', 'No'),)))
     Last_Mail_Date = forms.DateField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Query_Limit = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class QueryManagementForm(forms.Form):
+    Query_Name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}), initial="Query name")
+    Query_List = forms.CharField(required=False, max_length=5, widget=forms.Select(attrs={'class': 'form-control'}, choices=(('empty', ''),('yes', 'Yes'),('no', 'No'),)))
