@@ -16,7 +16,7 @@ class Property(models.Model):
     Equity = models.CharField(max_length=3, null=True, blank=True)
     Absentee_Owned = models.CharField(max_length=5, null=True)
     Last_Mail_Date = models.DateField(null=True, blank=True, default=None)
-
+    Deleted = models.BooleanField(default=False)
 
 class Query(models.Model):
     Owner_Label_Name = models.CharField(max_length=100, null=True, blank=True)
@@ -33,4 +33,4 @@ class Query(models.Model):
     Absentee_Owned = models.CharField(max_length=5, null=True, blank=True)
     Last_Mail_Date = models.DateField(null=True, blank=True, default=None)
     Query_Limit = models.CharField(max_length=5, null=True, blank=True, default=None)
-    Query_Name = models.CharField(max_length=100, null=False, blank=False, default='Default query name')
+    Query_Name = models.CharField(max_length=100, null=False, blank=False)

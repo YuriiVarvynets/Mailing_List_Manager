@@ -1667,10 +1667,13 @@
     };
 
     BootstrapTable.prototype.remove = function (params) {
+
         var len = this.options.data.length,
             i, row;
 
+
         if (!params.hasOwnProperty('field') || !params.hasOwnProperty('values')) {
+            alert('You click like action, row: PArams ' + JSON.stringify(row));
             return;
         }
 

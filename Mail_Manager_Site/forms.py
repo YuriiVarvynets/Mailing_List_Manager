@@ -32,10 +32,8 @@ class QueryManagementForm(forms.Form):
         name_choices = []
 
         for o in Query.objects.all():
-            print(o.Query_Name)
             name_choices.append((o.id, str(o.Query_Name)))
 
         self.fields['Query_List'] = forms.CharField(required=False, max_length=5, widget=forms.Select(attrs={'class': 'form-control'}, choices=name_choices))
-        print("test choices: ", name_choices)
 
     Query_Name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}), initial="Query name")

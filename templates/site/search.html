@@ -31,12 +31,8 @@
 
 <div id='cssmenu'>
 <ul>
-    <!--
-   <li><a href='/Home'>Home</a></li>-->
    <li><a href='/Import'>Import</a></li>
    <li class="active"><a href='/Search'>Search</a></li>
-    <!--
-   <li><a href='/About'>About</a></li>-->
 </ul>
 </div>
 
@@ -145,6 +141,14 @@
         </div>
     </div>
 
+{% if form.errors %}
+    <p style="color: red;">
+        Please correct the error{{ form.errors|pluralize }} below.
+    </p>
+    <p>
+    {{ form.errors }}
+    </p>
+{% endif %}
 
 {% if query_form %}
 
@@ -156,10 +160,6 @@
         </div>
     </div>
     <div class="row">
-        <!--
-        <div class="col-md-3">
-            <h1 id="h1_search">Query Name:</h1>
-        </div> -->
         <div class="col-md-6">
             {{ query_form.Query_Name}}
         </div>
@@ -176,10 +176,6 @@
         </div>
     </div>
     <div class="row">
-        <!--
-        <div class="col-md-3">
-            <h1 id="h1_search">Query Name:</h1>
-        </div>-->
         <div class="col-md-6">
             {{ query_form.Query_List}}
         </div>
@@ -199,6 +195,13 @@
 </div>
 {% endif %}
 
+{% if message %}
+<div class="alert alert-success">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Success!</strong> {{ message }}
+</div>
+{% endif %}
+
 </form>
 
 
@@ -215,6 +218,7 @@
     <thead>
     <tr>
         <th data-field="state" data-checkbox="true"></th>
+        <th data-field="id" data-visible="false">id</th>
         <th data-field="Owner_Label_Name" data-sortable="true">Owner Name</th>
         <th data-field="Property_Address" data-sortable="true">Property Address</th>
         <th data-field="Property_City" data-sortable="true">Property City</th>
@@ -236,17 +240,6 @@
 
 {% endif %}
 
-
-{% if form.errors %}
-    <p style="color: red;">
-        Please correct the error{{ form.errors|pluralize }} below.
-    </p>
-    <p>
-    {{ form.errors }}
-    </p>
-{% endif %}
-
-
 {% if query_form.errors %}
     <p style="color: red;">
         Please correct the error{{ query_form.errors|pluralize }} below.
@@ -258,9 +251,6 @@
 
 </div>
 
-
-
-
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker({
@@ -271,22 +261,22 @@
 
 <script>
 
-    var data2 = [{'description': 'An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3) ', 'name': 'bootstrap-table', 'stargazers_count': '526', 'forks_count': '122'}];
     var data = JSON.parse('{{ json_data|safe }}');
+    var $table = $('#table'),
+    $remove = $('#remove');
 
     $(function () {
-        $('#table').bootstrapTable({
+        $table.bootstrapTable({
             data: data
         });
-    });
 
-    var $table = $('#table'),
-        $remove = $('#remove');
-    $(function () {
         $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
             $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+            alert('table on');
         });
+
         $remove.click(function () {
+            alert('remove click');
             var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
                 return row.id
             });
@@ -304,11 +294,34 @@
             '</a>'
         ].join('');
     }
+
     window.operateEvents = {
         'click .like': function (e, value, row, index) {
             alert('You click like action, row: ' + JSON.stringify(row));
         },
         'click .remove': function (e, value, row, index) {
+
+            var post_params = new FormData();
+            post_params.append('id', [row.id]);
+            post_params.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            post_params.append('name', 'remove_row_from_table');
+
+            var xhr = new XMLHttpRequest();
+            var url = 'remove_row/';
+
+            xhr.open("POST", url, true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-length", post_params.length);
+            xhr.setRequestHeader("Connection", "close");
+
+            xhr.onreadystatechange = function() {//Call a function when the state changes.
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    alert(xhr.responseText);
+                }
+            }
+            xhr.send(post_params);
+
             $table.bootstrapTable('remove', {
                 field: 'id',
                 values: [row.id]
